@@ -1,0 +1,52 @@
+8
+
+dir
+51
+file:///var/svn/vimtrac/trunk/plugin
+file:///var/svn/vimtrac
+
+
+
+2008-04-23T08:28:41.167146Z
+51
+root
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+e49280d1-7682-4fb0-9862-8065ab837b5f
+
+trac.py
+file
+62
+
+
+
+2008-05-09T04:20:39.000000Z
+ee0a168c44cfa6c345e1ed3b9419f7da
+2008-05-09T05:14:12.974088Z
+62
+root
+
+trac.vim
+file
+63
+
+
+
+2008-05-09T03:45:39.000000Z
+37eb19ef1ce31278346024a4e0045e6d
+2008-05-09T05:14:40.980521Z
+63
+root
+
