@@ -4,9 +4,9 @@ set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
 
-set ts=4    " tab and shift width
-set sw=4    " 
-set et      " expand tabs to spaces
+set ts=8    " tab and shift width
+set sw=8    " 
+set noet      " expand tabs to spaces
 set smarttab
 set autoindent
 set smartindent
