@@ -61,6 +61,7 @@ let Tlist_File_Fold_Auto_Close = 1
 
 " NERDTree configuration...
 " map <F7> to toggle NERDTree window
+nmap <silent> <F8> :BufExplorer<CR>
 nmap <silent> <F9> :NERDTreeToggle<CR>
 nmap <silent> <F10> :TlistToggle<CR>
 let NERDTreeChDirMode = 2
