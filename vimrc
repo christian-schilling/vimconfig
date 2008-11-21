@@ -5,20 +5,71 @@ set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
 
 set ts=4    " tab and shift width
-set sw=4    " 
+set sw=4    "
 set et      " expand tabs to spaces
 set smarttab
 set autoindent
 set smartindent
-match ErrorMsg /\t/ " highlight tabs as errors
+
+set list
+set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
 
 let &guicursor = &guicursor . ",a:blinkon0"
 set cursorline
 
-set statusline=%F%m%r%h%w(%{&ff},%Y)\ [\%03.3b,0x\%02.2B]@%o%=\ line:%l,%v\ (%p%%)
+set statusline=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
 set laststatus=2
 
-color darkspectrum
+"display a warning if &et is wrong, or we have mixed-indenting
+set statusline+=%#error#
+set statusline+=%{StatuslineTabWarning()}
+set statusline+=%{StatuslineTrailingSpaceWarning()}
+set statusline+=%*
+set statusline+=%=\ line:%l,%v\ (%p%%)
+
+"recalculate the tab warning flag when idle and after writing
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+
+"return '[tabs]' if tabs are used to indent
+"return '[mixed-indenting]' if spaces and tabs are used to indent
+"return an empty string if everything is fine
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let tabs = search('^\t', 'nw') != 0
+        let spaces = search('^ ', 'nw') != 0
+
+        if tabs && spaces
+            let b:statusline_tab_warning =  '[mixed-indenting]'
+        elseif (spaces)
+            set et
+            let b:statusline_tab_warning = ''
+        elseif (tabs)
+            set noet
+            let b:statusline_tab_warning = '[tabs]'
+        else
+            let b:statusline_tab_warning = ''
+        endif
+    endif
+    return b:statusline_tab_warning
+endfunction
+
+"recalculate the trailing whitespace warning when idle, and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+
+"return '[\s]' if trailing white space is detected
+"return '' otherwise
+function! StatuslineTrailingSpaceWarning()
+    if !exists("b:statusline_trailing_space_warning")
+        if search('\s\+$', 'nw') != 0
+            let b:statusline_trailing_space_warning = '[\s]'
+        else
+            let b:statusline_trailing_space_warning = ''
+        endif
+    endif
+    return b:statusline_trailing_space_warning
+endfunction
+
+color desert
 syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
