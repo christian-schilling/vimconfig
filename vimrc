@@ -39,6 +39,7 @@ function! StatuslineTabWarning()
         let spaces = search('^ ', 'nw') != 0
 
         if tabs && spaces
+            set noet
             let b:statusline_tab_warning =  '[mixed-indenting]'
         elseif (spaces)
             set et
