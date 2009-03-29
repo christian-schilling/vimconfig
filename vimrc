@@ -99,7 +99,7 @@ set backup
 set backupdir=~/.backups
 
 " no tool bar please
-set guioptions='acirmgt'
+set guioptions='acirlmgt'
 set showtabline=2
 set guifont=Monospace\ 12
 
