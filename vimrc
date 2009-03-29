@@ -70,7 +70,7 @@ function! StatuslineTrailingSpaceWarning()
     return b:statusline_trailing_space_warning
 endfunction
 
-color desert
+color pyte
 syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
