@@ -101,7 +101,7 @@ set backupdir=~/.backups
 " no tool bar please
 set guioptions='acirlmgt'
 set showtabline=2
-set guifont=Monospace\ 12
+set guifont=Monospace\ 11
 
 " Taglist
 let Tlist_GainFocus_On_ToggleOpen = 1
@@ -117,7 +117,7 @@ nmap <silent> <F8> :BufExplorer<CR>
 nmap <silent> <F9> :NERDTreeToggle<CR>
 nmap <silent> <F10> :TlistToggle<CR>
 let NERDTreeChDirMode = 2
-let NERDTreeIgnore=['.pyc$','.jpg$','.gif$','.png$','.zip$', '\~$', '.pdf$','.aus$','.lo$','.o$']
+let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
 
 autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
