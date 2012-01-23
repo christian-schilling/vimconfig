@@ -1,3 +1,4 @@
+call pathogen#infect()
 set nocompatible                " vim comfort instead of vi compatibility
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set ruler       " show the cursor position all the time
