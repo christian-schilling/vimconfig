@@ -5,6 +5,13 @@ set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
 
+
+" Source the vimrc file after saving it
+autocmd! bufwritepost .vimrc source $MYVIMRC
+
+let mapleader = ","
+nmap <leader>v :edit $MYVIMRC<CR>
+
 set hidden
 
 set ts=4    " tab and shift width
