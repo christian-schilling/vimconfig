@@ -4,7 +4,9 @@ set backspace=indent,eol,start  " allow backspacing over everything in insert mo
 set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
+set visualbell
 
+set scrolloff=3
 
 " Source the vimrc file after saving it
 autocmd! bufwritepost .vimrc source $MYVIMRC
@@ -132,6 +134,8 @@ nmap <silent> <leader>n :NERDTreeToggle<CR>
 nmap <silent> <F10> :TlistToggle<CR>
 let NERDTreeChDirMode = 2
 let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
+
+set wildignore+=*.o,*.obj
 
 map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 
