@@ -25,7 +25,7 @@ set list
 set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
 
 let &guicursor = &guicursor . ",a:blinkon0"
-set cursorline
+set nocursorline
 
 set statusline=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
 set laststatus=2
