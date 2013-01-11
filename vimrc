@@ -4,12 +4,14 @@ set backspace=indent,eol,start  " allow backspacing over everything in insert mo
 set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
+set visualbell
 
+set scrolloff=3
 
 " Source the vimrc file after saving it
 autocmd! bufwritepost .vimrc source $MYVIMRC
 
-let mapleader = ","
+let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
 
 set hidden
@@ -80,7 +82,7 @@ function! StatuslineTrailingSpaceWarning()
     return b:statusline_trailing_space_warning
 endfunction
 
-color native
+color desert
 syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
@@ -120,16 +122,26 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Compact_Format = 1
 let Tlist_File_Fold_Auto_Close = 1
 
+inoremap <F8> <C-O>za
+nnoremap <F8> za
+onoremap <F8> <C-C>za
+vnoremap <F8> zf
 
 " NERDTree configuration...
-" map <F7> to toggle NERDTree window
-nmap <silent> <F8> :BufExplorer<CR>
+" map <F9> to toggle NERDTree window
 nmap <silent> <F9> :NERDTreeToggle<CR>
+nmap <silent> <leader>n :NERDTreeToggle<CR>
 nmap <silent> <F10> :TlistToggle<CR>
 let NERDTreeChDirMode = 2
 let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
+
+set wildignore+=*.o,*.obj
+
+map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 
 autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
+
+au BufRead,BufNewFile SConstruct          setfiletype python
