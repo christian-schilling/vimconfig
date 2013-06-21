@@ -1,3 +1,4 @@
+imap <S-Space> <Esc>
 call pathogen#infect()
 set nocompatible                " vim comfort instead of vi compatibility
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
@@ -126,6 +127,11 @@ inoremap <F8> <C-O>za
 nnoremap <F8> za
 onoremap <F8> <C-C>za
 vnoremap <F8> zf
+
+nnoremap <C-left> :vertical resize -1<cr>
+nnoremap <C-down> :resize +1<cr>
+nnoremap <C-up> :resize -1<cr>
+nnoremap <C-right> :vertical resize +1<cr>
 
 " NERDTree configuration...
 " map <F9> to toggle NERDTree window
