@@ -2,9 +2,9 @@ imap <c-Space> <Esc>
 vmap <c-Space> <Esc>
 nmap <c-Space> <Esc>
 
-vmap <c-s> :wa<CR>
+vmap <c-s> <Esc>:wa<CR>
+imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
-imap <c-s> :wa<CR>
 
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
@@ -46,7 +46,7 @@ set tw=79
 set nowrap
 set list
 set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
-" set formatoptions-=t
+set formatoptions-=t
 
 let &guicursor = &guicursor . ",a:blinkon0"
 set nocursorline
@@ -164,6 +164,9 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+map <M-]> :cn<CR>
+map <M-[> :cp<CR>
+map <M-#> :cclose<CR>
 
 " NERDTree configuration...
 " map toggle NERDTree window
@@ -174,7 +177,7 @@ let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$
 
 set wildignore+=*.o,*.obj
 
-map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+map <silent> <leader>g :execute "vimgrep /" . expand("<cword>") . "/j `git ls-files`" <Bar> cw<CR>
 
 autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
