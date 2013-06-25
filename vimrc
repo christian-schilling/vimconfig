@@ -1,16 +1,32 @@
+imap <c-Space> <Esc>
+vmap <c-Space> <Esc>
+nmap <c-Space> <Esc>
+
+vmap <c-s> <Esc>:wa<CR>
+imap <c-s> <Esc>:wa<CR>
+nmap <c-s> :wa<CR>
+
+let g:ctrlp_map = '<leader>f'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+
 call pathogen#infect()
-set nocompatible                " vim comfort instead of vi compatibility
-set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set nocompatible               " vim comfort instead of vi compatibility
+set backspace=indent,eol,start " allow backspacing
+                               " over everything in insert mode
 set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
+set visualbell
+set noswapfile
 
+set scrolloff=3
 
 " Source the vimrc file after saving it
 autocmd! bufwritepost .vimrc source $MYVIMRC
 
-let mapleader = ","
+let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
+nmap <leader>m :wa<CR>:make<CR>
 
 set hidden
 
@@ -21,13 +37,22 @@ set smarttab
 set autoindent
 set smartindent
 
+augroup vimrc_autocmds
+  autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp highlight OverLength ctermbg=darkgrey guibg=#ff0000
+  autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp match OverLength /\%80v.*/
+augroup END
+
+set tw=79
+set nowrap
 set list
-set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
+set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+set formatoptions-=t
 
 let &guicursor = &guicursor . ",a:blinkon0"
-set cursorline
+set nocursorline
 
-set statusline=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
+set statusline=%{fugitive#statusline()}
+set statusline+=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
 set laststatus=2
 
 "display a warning if &et is wrong, or we have mixed-indenting
@@ -80,12 +105,15 @@ function! StatuslineTrailingSpaceWarning()
     return b:statusline_trailing_space_warning
 endfunction
 
-color darkspectrum
+color desert
 syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
+
+
 " When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
+" Don't do it when the position is invalid or when inside an
+" event handler
 " (happens when dropping a file on gvim).
 if has("autocmd")
   autocmd BufReadPost *
@@ -120,17 +148,39 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Compact_Format = 1
 let Tlist_File_Fold_Auto_Close = 1
 
+inoremap <F8> <C-O>za
+nnoremap <F8> za
+onoremap <F8> <C-C>za
+vnoremap <F8> zf
+
+nnoremap <C-left> :vertical resize -1<cr>
+nnoremap <C-down> :resize +1<cr>
+nnoremap <C-up> :resize -1<cr>
+nnoremap <C-right> :vertical resize +1<cr>
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+map <M-]> :cn<CR>
+map <M-[> :cp<CR>
+map <M-#> :cclose<CR>
 
 " NERDTree configuration...
-" map <F7> to toggle NERDTree window
-nmap <silent> <F8> :BufExplorer<CR>
-nmap <silent> <F9> :NERDTreeToggle<CR>
-nmap <silent> <F10> :TlistToggle<CR>
+" map toggle NERDTree window
+nmap <silent> <leader>t :NERDTreeToggle<CR>
+nmap <silent> <leader>/ :noh<CR>
 let NERDTreeChDirMode = 2
 let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
+
+set wildignore+=*.o,*.obj
+
+map <silent> <leader>g :execute "vimgrep /" . expand("<cword>") . "/j `git ls-files`" <Bar> cw<CR>
 
 autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
-au BufRead,BufNewFile SConstruct            setfiletype python
+au BufRead,BufNewFile SConstruct        setfiletype python
