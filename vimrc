@@ -36,7 +36,7 @@ autocmd! bufwritepost .vimrc source $MYVIMRC
 
 let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
-nmap <leader>m :wa<CR>:make<CR>
+nmap <leader>b :wa<CR>:make<CR>
 
 set hidden
 
