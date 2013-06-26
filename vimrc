@@ -1,6 +1,14 @@
-imap <c-Space> <Esc>
-vmap <c-Space> <Esc>
-nmap <c-Space> <Esc>
+set pastetoggle=<F2>
+
+map  <Nul> <Esc>
+vmap <Nul> <Esc>
+cmap <Nul> <Esc>
+nmap <Nul> <Esc>
+imap <Nul> <Esc>
+
+inoremap <c-Space> <Esc>
+vnoremap <c-Space> <Esc>
+noremap <c-Space> <Esc>
 
 vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
