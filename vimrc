@@ -172,8 +172,9 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-map <M-]> :cn<CR>
-map <M-[> :cp<CR>
+map <silent> <M-8> :execute "vimgrep /" . expand("<cword>") . "/j `git ls-files`" <Bar> cw<CR>
+map <M-n> :cn<CR>
+map <M-S-n> :cp<CR>
 map <M-#> :cclose<CR>
 
 " NERDTree configuration...
@@ -185,7 +186,6 @@ let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$
 
 set wildignore+=*.o,*.obj
 
-map <silent> <leader>g :execute "vimgrep /" . expand("<cword>") . "/j `git ls-files`" <Bar> cw<CR>
 
 autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
