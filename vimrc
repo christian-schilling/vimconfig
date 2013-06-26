@@ -29,6 +29,8 @@ set noswapfile
 
 set scrolloff=3
 
+set nofoldenable
+
 " Source the vimrc file after saving it
 autocmd! bufwritepost .vimrc source $MYVIMRC
 
