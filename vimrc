@@ -14,14 +14,16 @@ vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
 
+let g:tagbar_compact = 1
+let g:tagbar_width = 30
 let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
 set updatetime=1000
 
-let g:signify_mapping_next_hunk = '<F6>'
-let g:signify_mapping_prev_hunk = '<F5>'
+let g:signify_mapping_next_hunk = '<M-]>'
+let g:signify_mapping_prev_hunk = '<M-[>'
 let g:signify_cursorhold_normal = 1
 let g:signify_cursorhold_insert = 1
 call pathogen#infect()
@@ -184,8 +186,8 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 map <silent> <M-8> :execute "vimgrep /" . expand("<cword>") . "/j `git ls-files`" <Bar> cw<CR>
-map <M-n> :cn<CR>
-map <M-S-n> :cp<CR>
+map <M-j> :cn<CR>
+map <M-k> :cp<CR>
 map <M-#> :cclose<CR>
 
 nmap <silent><leader>t :TagbarToggle<CR>
