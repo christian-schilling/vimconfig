@@ -18,6 +18,12 @@ let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
+set updatetime=1000
+
+let g:signify_mapping_next_hunk = '<F6>'
+let g:signify_mapping_prev_hunk = '<F5>'
+let g:signify_cursorhold_normal = 1
+let g:signify_cursorhold_insert = 1
 call pathogen#infect()
 set nocompatible               " vim comfort instead of vi compatibility
 set backspace=indent,eol,start " allow backspacing

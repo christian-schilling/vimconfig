@@ -19,9 +19,6 @@
 [submodule "bundle/vim-makeshift"]
 	path = bundle/vim-makeshift
 	url = git://github.com/johnsyweb/vim-makeshift.git
-[submodule "bundle/vim-gitgutter"]
-	path = bundle/vim-gitgutter
-	url = git://github.com/airblade/vim-gitgutter.git
 [submodule "bundle/vim-surround"]
 	path = bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
@@ -34,3 +31,6 @@
 [submodule "bundle/tagbar"]
 	path = bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
+[submodule "bundle/vim-signify"]
+	path = bundle/vim-signify
+	url = https://github.com/mhinz/vim-signify
