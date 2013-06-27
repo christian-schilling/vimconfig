@@ -14,6 +14,7 @@ vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
 
+let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
@@ -36,7 +37,8 @@ autocmd! bufwritepost .vimrc source $MYVIMRC
 
 let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
-nmap <leader>b :wa<CR>:make<CR>
+nmap <leader>b :wa<CR>:make<CR>:cw<CR>
+nmap <leader>j :wa<CR>:cfile `git jump diff`<CR>
 
 set hidden
 
@@ -59,7 +61,7 @@ set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
 set formatoptions-=t
 
 let &guicursor = &guicursor . ",a:blinkon0"
-set nocursorline
+set cursorline
 
 set statusline=%{fugitive#statusline()}
 set statusline+=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
@@ -115,7 +117,7 @@ function! StatuslineTrailingSpaceWarning()
     return b:statusline_trailing_space_warning
 endfunction
 
-color desert
+color hybrid
 syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
@@ -147,9 +149,10 @@ set backup
 set backupdir=~/.backups
 
 " no tool bar please
-set guioptions='acirlmgt'
+set guioptions='acigrt'
 set showtabline=2
-set guifont=Monospace\ 11
+set guifont=Inconsolata-dz\ for\ Powerline\ 11
+"set guifont=Inconsolata\ 12
 
 " Taglist
 let Tlist_GainFocus_On_ToggleOpen = 1
@@ -179,9 +182,10 @@ map <M-n> :cn<CR>
 map <M-S-n> :cp<CR>
 map <M-#> :cclose<CR>
 
+nmap <silent><leader>t :TagbarToggle<CR>
 " NERDTree configuration...
 " map toggle NERDTree window
-nmap <silent> <leader>t :NERDTreeToggle<CR>
+nmap <silent> <leader>d :NERDTreeToggle<CR>
 nmap <silent> <leader>/ :noh<CR>
 let NERDTreeChDirMode = 2
 let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
