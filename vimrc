@@ -48,6 +48,8 @@ nmap <leader>v :edit $MYVIMRC<CR>
 nmap <leader>b :wa<CR>:make<CR>:cw<CR>
 nmap <leader>j :wa<CR>:cfile `git jump diff`<CR>
 
+nmap <leader>gd :Gdiff<CR>
+
 set hidden
 
 set ts=4    " tab and shift width
