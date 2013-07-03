@@ -14,13 +14,17 @@ vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
 
+inoremap <C-O> <C-X><C-O>
 let g:tagbar_compact = 1
 let g:tagbar_width = 30
 let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
-set updatetime=1000
+let g:clang_complete_auto = 0
+let $CCWRAPPER = "~/.vim/bundle/clang_complete/bin/cc_args.py"
+
+"set updatetime=1000
 
 let g:signify_mapping_next_hunk = '<M-]>'
 let g:signify_mapping_prev_hunk = '<M-[>'
@@ -33,9 +37,10 @@ set backspace=indent,eol,start " allow backspacing
 set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
-set visualbell
+set novisualbell
 set noswapfile
 
+set completeopt-=preview
 set scrolloff=3
 
 set nofoldenable
@@ -46,9 +51,18 @@ autocmd! bufwritepost .vimrc source $MYVIMRC
 let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
 nmap <leader>b :wa<CR>:make<CR>:cw<CR>
-nmap <leader>j :wa<CR>:cfile `git jump diff`<CR>
 
+nmap <leader>gj :wa<CR>:cfile `git jump diff`<CR>
 nmap <leader>gd :Gdiff<CR>
+nmap <leader>gw :Gwrite<CR>
+nmap <leader>gc :Gcommit<CR>
+nmap <leader>gr :Gread<CR>
+nmap <leader>gs :Gstatus<CR>
+
+nmap <M-p> :diffput<CR>:diffupdate<CR>
+nmap <M-o> :diffget<CR>:diffupdate<CR>
+vmap <M-p> :diffput<CR>:diffupdate<CR>
+vmap <M-o> :diffget<CR>:diffupdate<CR>
 
 set hidden
 
@@ -58,6 +72,7 @@ set et      " expand tabs to spaces
 set smarttab
 set autoindent
 set smartindent
+set rnu
 
 augroup vimrc_autocmds
   autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp highlight OverLength ctermbg=darkgrey guibg=#ff0000
@@ -72,6 +87,8 @@ set formatoptions-=t
 
 let &guicursor = &guicursor . ",a:blinkon0"
 set cursorline
+
+set diffopt=filler,context:1000000
 
 set statusline=%{fugitive#statusline()}
 set statusline+=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
@@ -160,7 +177,7 @@ set backupdir=~/.backups
 
 " no tool bar please
 set guioptions='acigrt'
-set showtabline=2
+set showtabline=1
 set guifont=Inconsolata-dz\ for\ Powerline\ 11
 "set guifont=Inconsolata\ 12
 
@@ -176,6 +193,11 @@ nnoremap <F8> za
 onoremap <F8> <C-C>za
 vnoremap <F8> zf
 
+nnoremap <left> :vertical resize -10<cr>
+nnoremap <down> :resize +10<cr>
+nnoremap <up> :resize -10<cr>
+nnoremap <right> :vertical resize +10<cr>
+
 nnoremap <C-left> :vertical resize -1<cr>
 nnoremap <C-down> :resize +1<cr>
 nnoremap <C-up> :resize -1<cr>
@@ -187,15 +209,19 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+set omnifunc=syntaxcomplete#Complete
+
+vnoremap <S-K> :s/[\[\(,]/&\r/g<CR>:s/[\]\)]/\r&/g<CR>:noh<CR>
 map <silent> <M-8> :execute "vimgrep /" . expand("<cword>") . "/j `git ls-files`" <Bar> cw<CR>
 map <M-j> :cn<CR>
 map <M-k> :cp<CR>
 map <M-#> :cclose<CR>
 
-nmap <silent><leader>t :TagbarToggle<CR>
+nmap <silent><leader>t :TagbarOpen fj<CR>
+nmap <silent><leader><C-t> :TagbarClose<CR>
 " NERDTree configuration...
 " map toggle NERDTree window
-nmap <silent> <leader>d :NERDTreeToggle<CR>
+nmap <silent> <leader><C-f> :NERDTreeToggle<CR>
 nmap <silent> <leader>/ :noh<CR>
 let NERDTreeChDirMode = 2
 let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
