@@ -176,7 +176,7 @@ set backup
 set backupdir=~/.backups
 
 " no tool bar please
-set guioptions='acigrt'
+set guioptions='acigt'
 set showtabline=1
 set guifont=Inconsolata-dz\ for\ Powerline\ 11
 "set guifont=Inconsolata\ 12
