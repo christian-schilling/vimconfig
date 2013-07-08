@@ -144,7 +144,9 @@ function! StatuslineTrailingSpaceWarning()
     return b:statusline_trailing_space_warning
 endfunction
 
-color hybrid
+:hi MatchParen cterm=bold ctermbg=none ctermfg=none
+
+color jellybeans
 syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
