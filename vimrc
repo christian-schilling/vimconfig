@@ -236,3 +236,12 @@ autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
 au BufRead,BufNewFile SConstruct        setfiletype python
+
+let c='a'
+while c <= 'z'
+exec "set <A-".c.">=\e".c
+    exec "imap \e".c." <A-".c.">"
+    let c = nr2char(1+char2nr(c))
+endw
+
+set timeout ttimeoutlen=50
