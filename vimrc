@@ -52,7 +52,7 @@ let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
 nmap <leader>b :wa<CR>:make<CR>:cw<CR>
 
-nmap <leader>gj :wa<CR>:cfile `git jump diff`<CR>
+nmap <leader>gj :wa<CR>:cfile `~/.vim/bin/git-jump diff`<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gw :Gwrite<CR>
 nmap <leader>gc :Gcommit<CR>
