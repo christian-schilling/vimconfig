@@ -90,6 +90,9 @@ set cursorline
 
 set diffopt=filler,context:1000000
 
+" autoclean fugitive buffers
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
 set statusline=%{fugitive#statusline()}
 set statusline+=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
 set laststatus=2
