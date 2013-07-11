@@ -52,12 +52,14 @@ let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
 nmap <leader>b :wa<CR>:make<CR>:cw<CR>
 
-nmap <leader>gj :wa<CR>:cfile `~/.vim/bin/git-jump diff`<CR>
+nmap <leader>gj :wa<CR>:silent cfile `~/.vim/bin/git-jump diff`<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gw :Gwrite<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gr :Gread<CR>
 nmap <leader>gs :Gstatus<CR>
+nmap <leader>gl :silent Glog<CR>:cw<CR>
+nmap <leader>go :cclose<CR>:Gedit<CR>
 
 nmap <M-p> :diffput<CR>:diffupdate<CR>
 nmap <M-o> :diffget<CR>:diffupdate<CR>
@@ -214,7 +216,7 @@ map <C-l> <C-w>l
 set omnifunc=syntaxcomplete#Complete
 
 vnoremap <S-K> :s/[\[\(,]/&\r/g<CR>:s/[\]\)]/\r&/g<CR>:noh<CR>
-map <silent> <M-8> :execute "vimgrep /" . expand("<cword>") . "/j `git ls-files`" <Bar> cw<CR>
+map <M-8> :execute 'silent Ggrep -w ' . expand("<cword>") <Bar> cw<CR>
 map <M-j> :cn<CR>
 map <M-k> :cp<CR>
 map <M-#> :cclose<CR>
