@@ -5,16 +5,18 @@ vmap <Nul> <Esc>
 cmap <Nul> <Esc>
 nmap <Nul> <Esc>
 imap <Nul> <Esc>
+smap <Nul> <Esc>
 
 inoremap <c-Space> <Esc>
 vnoremap <c-Space> <Esc>
 noremap <c-Space> <Esc>
+snoremap <c-Space> <Esc>
 
 vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
 
-inoremap <C-O> <C-X><C-O>
+inoremap <C-l> <C-x><C-o>
 let g:tagbar_compact = 1
 let g:tagbar_width = 30
 let g:tagbar_iconchars = ['▸', '▾']
@@ -28,8 +30,6 @@ let $CCWRAPPER = "~/.vim/bundle/clang_complete/bin/cc_args.py"
 
 let g:signify_mapping_next_hunk = '<M-]>'
 let g:signify_mapping_prev_hunk = '<M-[>'
-let g:signify_cursorhold_normal = 1
-let g:signify_cursorhold_insert = 1
 call pathogen#infect()
 set nocompatible               " vim comfort instead of vi compatibility
 set backspace=indent,eol,start " allow backspacing
@@ -43,7 +43,7 @@ set noswapfile
 set completeopt-=preview
 set scrolloff=3
 
-set nofoldenable
+"set nofoldenable
 
 " Source the vimrc file after saving it
 autocmd! bufwritepost .vimrc source $MYVIMRC
@@ -76,16 +76,17 @@ set autoindent
 set smartindent
 set rnu
 
-augroup vimrc_autocmds
-  autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp highlight OverLength ctermbg=darkgrey guibg=#ff0000
-  autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp match OverLength /\%80v.*/
-augroup END
+" augroup vimrc_autocmds
+"   autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp highlight OverLength ctermbg=darkgrey guibg=#ff0000
+"   autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp match OverLength /\%80v.*/
+" augroup END
 
-set tw=79
+set tw=80
+set colorcolumn=80
 set nowrap
 set list
 set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
-set formatoptions-=t
+set formatoptions+=t
 
 let &guicursor = &guicursor . ",a:blinkon0"
 set cursorline
@@ -152,7 +153,7 @@ endfunction
 hi MatchParen cterm=bold ctermbg=none ctermfg=none
 hi MatchParen gui=bold guibg=NONE guifg=NONE
 
-color jellybeans
+color hybrid
 syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
@@ -220,7 +221,8 @@ map <C-l> <C-w>l
 set omnifunc=syntaxcomplete#Complete
 
 vnoremap <S-K> :s/[\[\(,]/&\r/g<CR>:s/[\]\)]/\r&/g<CR>:noh<CR>
-map <M-8> :execute 'silent Ggrep -w ' . expand("<cword>") <Bar> cw<CR>
+map <M-8> :silent execute 'silent Ggrep -w ' . expand("<cword>") <Bar> :cw<CR>
+map <M-t> :silent execute 'silent Ggrep -w TODO'<Bar> :cw<CR>
 map <M-j> :cn<CR>
 map <M-k> :cp<CR>
 map <M-#> :cclose<CR>
@@ -232,6 +234,7 @@ nmap <silent><leader><C-t> :TagbarClose<CR>
 nmap <silent> <leader><C-f> :NERDTreeToggle<CR>
 nmap <silent> <leader>/ :noh<CR>
 let NERDTreeChDirMode = 2
+let NERDTreeMinimalUI = 2
 let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
 
 set wildignore+=*.o,*.obj
@@ -243,6 +246,7 @@ au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
 au BufRead,BufNewFile SConstruct        setfiletype python
 
+" fix alt in dumb terminals
 let c='a'
 while c <= 'z'
 exec "set <A-".c.">=\e".c
