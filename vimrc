@@ -1,3 +1,7 @@
+python import ctypes,os
+python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
+python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
+
 set pastetoggle=<F2>
 
 map  <Nul> <Esc>
@@ -24,7 +28,7 @@ let g:ctrlp_map = '<leader>f'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
 let g:clang_complete_auto = 0
-let $CCWRAPPER = "~/.vim/bundle/clang_complete/bin/cc_args.py"
+let g:clang_library_path = $HOME.'/.vim'
 
 "set updatetime=1000
 
