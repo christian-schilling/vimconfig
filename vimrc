@@ -20,6 +20,10 @@ vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
 
+vmap <M-m> <Esc>:wa<CR>:make<CR>
+imap <M-m> <Esc>:wa<CR>:make<CR>
+nmap <M-m> <Esc>:wa<CR>:make<CR>
+
 inoremap <C-l> <C-x><C-o>
 let g:tagbar_compact = 1
 let g:tagbar_width = 30
@@ -27,6 +31,7 @@ let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
+let g:clang_complete_copen=1
 let g:clang_complete_auto = 0
 let g:clang_library_path = $HOME.'/.vim'
 
@@ -54,7 +59,7 @@ autocmd! bufwritepost .vimrc source $MYVIMRC
 
 let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
-nmap <leader>b :wa<CR>:make<CR>:cw<CR>
+nmap <leader>m :wa<CR>:make<CR>:cw<CR>
 
 nmap <leader>gj :wa<CR>:silent cfile `~/.vim/bin/git-jump diff`<CR>
 nmap <leader>gd :Gdiff<CR>
@@ -64,6 +69,8 @@ nmap <leader>gr :Gread<CR>
 nmap <leader>gs :Gstatus<CR>
 nmap <leader>gl :silent Glog<CR>:cw<CR>
 nmap <leader>go :cclose<CR>:Gedit<CR>
+
+nmap <M-/> :Ggrep 
 
 nmap <M-p> :diffput<CR>:diffupdate<CR>
 nmap <M-o> :diffget<CR>:diffupdate<CR>
@@ -157,7 +164,7 @@ endfunction
 hi MatchParen cterm=bold ctermbg=none ctermfg=none
 hi MatchParen gui=bold guibg=NONE guifg=NONE
 
-color hybrid
+color jellybeans
 syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
@@ -259,3 +266,13 @@ exec "set <A-".c.">=\e".c
 endw
 
 set timeout ttimeoutlen=50
+
+command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+function! QuickfixFilenames()
+  " Building a hash ensures we get each buffer only once
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
