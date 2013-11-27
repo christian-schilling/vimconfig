@@ -16,6 +16,10 @@ vnoremap <c-Space> <Esc>
 noremap <c-Space> <Esc>
 snoremap <c-Space> <Esc>
 
+let g:hardtime_default_on = 1
+let g:list_of_normal_keys = [ "h", "j", "k", "l", "-", "+"]
+let g:list_of_visual_keys = [ "h", "j", "k", "l", "-", "+"]
+
 vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
