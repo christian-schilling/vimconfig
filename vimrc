@@ -242,6 +242,8 @@ map <M-j> :cn<CR>
 map <M-k> :cp<CR>
 map <M-#> :cclose<CR>
 
+:command Thtml :%!tidy -config ~/.vim/tidyrc_html.txt -q -i --show-errors 0
+
 nmap <silent><leader>t :TagbarOpen fj<CR>
 nmap <silent><leader><C-t> :TagbarClose<CR>
 " NERDTree configuration...
