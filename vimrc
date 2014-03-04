@@ -1,8 +1,9 @@
 
-if !has("win32"):
+if !has("win32")
     python import ctypes,os
     python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
     python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
+endif
 
 set pastetoggle=<F2>
 
@@ -31,7 +32,10 @@ let g:tagbar_compact = 1
 let g:tagbar_width = 30
 let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+
+if !has("win32")
+    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+endif
 
 let g:clang_complete_copen=1
 let g:clang_complete_auto = 0
@@ -96,7 +100,7 @@ set rnu
 
 set tw=80
 set colorcolumn=80
-set nowrap
+set wrap
 set list
 
 if has("gui_win32")
