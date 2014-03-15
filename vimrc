@@ -16,7 +16,7 @@ vnoremap <c-Space> <Esc>
 noremap <c-Space> <Esc>
 snoremap <c-Space> <Esc>
 
-let g:hardtime_default_on = 1
+let g:hardtime_default_on = 0
 let g:list_of_normal_keys = [ "h", "j", "k", "l", "-", "+"]
 let g:list_of_visual_keys = [ "h", "j", "k", "l", "-", "+"]
 
@@ -59,7 +59,7 @@ set scrolloff=3
 "set nofoldenable
 
 " Source the vimrc file after saving it
-autocmd! bufwritepost .vimrc source $MYVIMRC
+" autocmd! bufwritepost .vimrc source $MYVIMRC
 
 let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
@@ -98,7 +98,7 @@ set rnu
 
 set tw=80
 set colorcolumn=80
-set nowrap
+set wrap
 set list
 set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
 set formatoptions+=t
@@ -170,6 +170,8 @@ hi MatchParen gui=bold guibg=NONE guifg=NONE
 
 color jellybeans
 syntax on       " highlight syntax
+highlight Cursor guifg=black guibg=white
+highlight MatchParen guibg=black guifg=white
 set hlsearch    " highlight searches
 
 
@@ -282,3 +284,25 @@ function! QuickfixFilenames()
   endfor
   return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
 endfunction
+
+fu! GenerateUUID()
+
+python << EOF
+import uuid
+import vim
+
+# output a uuid to the vim variable for insertion below
+uu = "_" + str(uuid.uuid4()).replace('-','_')
+vim.command('let generatedUUID = "#ifndef %s\n#define %s\n\n"' % (uu,uu))
+ 
+EOF
+
+" insert the python generated uuid into the current cursor's position
+:execute "normal G"
+:execute "normal o\n#endif"
+:execute "normal gg"
+:execute "normal i" . generatedUUID . ""
+:execute "normal 3gg"
+endfunction
+
+noremap <Leader>uu :call GenerateUUID()<CR>
