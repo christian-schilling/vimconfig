@@ -1,6 +1,9 @@
-python import ctypes,os
-python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
-python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
+
+if !has("win32")
+    python import ctypes,os
+    python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
+    python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
+endif
 
 set pastetoggle=<F2>
 
@@ -33,7 +36,10 @@ let g:tagbar_compact = 1
 let g:tagbar_width = 30
 let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+
+if !has("win32")
+    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+endif
 
 let g:clang_complete_copen=1
 let g:clang_complete_auto = 0
@@ -100,7 +106,13 @@ set tw=80
 set colorcolumn=80
 set wrap
 set list
-set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+
+if has("gui_win32")
+    set listchars=tab:>-,trail:-,nbsp:-,extends:-
+    map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+else
+    set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+endif
 set formatoptions+=t
 
 let &guicursor = &guicursor . ",a:blinkon0"
@@ -204,8 +216,16 @@ set backupdir=~/.backups
 " no tool bar please
 set guioptions='acigt'
 set showtabline=1
-set guifont=Inconsolata-dz\ for\ Powerline\ 11
 "set guifont=Inconsolata\ 12
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Inconsolata-dz\ for\ Powerline\ 11
+    elseif has("gui_macvim")
+        set guifont=Menlo\ Regular:h14
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    endif
+endif
 
 " Taglist
 let Tlist_GainFocus_On_ToggleOpen = 1
