@@ -1,6 +1,9 @@
-python import ctypes,os
-python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
-python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
+
+if !has("win32")
+    python import ctypes,os
+    python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
+    python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
+endif
 
 set pastetoggle=<F2>
 let g:hardtime_default_on = 0
@@ -17,6 +20,10 @@ smap <Nul> <Esc>
 " noremap <c-Space> <Esc>
 " snoremap <c-Space> <Esc>
 
+let g:hardtime_default_on = 0
+let g:list_of_normal_keys = [ "h", "j", "k", "l", "-", "+"]
+let g:list_of_visual_keys = [ "h", "j", "k", "l", "-", "+"]
+
 vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
@@ -30,7 +37,10 @@ let g:tagbar_compact = 1
 let g:tagbar_width = 30
 let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+
+if !has("win32")
+    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+endif
 
 let g:clang_complete_copen=1
 let g:clang_complete_auto = 0
@@ -56,7 +66,7 @@ set scrolloff=3
 "set nofoldenable
 
 " Source the vimrc file after saving it
-autocmd! bufwritepost .vimrc source $MYVIMRC
+" autocmd! bufwritepost .vimrc source $MYVIMRC
 
 let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
@@ -97,7 +107,13 @@ set tw=80
 set colorcolumn=80
 set wrap
 set list
-set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+
+if has("gui_win32")
+    set listchars=tab:>-,trail:-,nbsp:-,extends:-
+    map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+else
+    set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+endif
 set formatoptions+=t
 
 let &guicursor = &guicursor . ",a:blinkon0"
@@ -167,6 +183,8 @@ hi MatchParen gui=bold guibg=NONE guifg=NONE
 
 color jellybeans
 syntax on       " highlight syntax
+highlight Cursor guifg=black guibg=white
+highlight MatchParen guibg=black guifg=white
 set hlsearch    " highlight searches
 
 
@@ -199,8 +217,16 @@ set backupdir=~/.backups
 " no tool bar please
 set guioptions='acigt'
 set showtabline=1
-set guifont=Inconsolata-dz\ for\ Powerline\ 11
 "set guifont=Inconsolata\ 12
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Inconsolata-dz\ for\ Powerline\ 11
+    elseif has("gui_macvim")
+        set guifont=Menlo\ Regular:h14
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    endif
+endif
 
 " Taglist
 let Tlist_GainFocus_On_ToggleOpen = 1
@@ -242,6 +268,8 @@ map <M-j> :cn<CR>
 map <M-k> :cp<CR>
 map <M-#> :cclose<CR>
 
+:command Thtml :%!tidy -config ~/.vim/tidyrc_html.txt -q -i --show-errors 0
+
 nmap <silent><leader>t :TagbarOpen fj<CR>
 nmap <silent><leader><C-t> :TagbarClose<CR>
 " NERDTree configuration...
@@ -281,3 +309,25 @@ function! QuickfixFilenames()
   endfor
   return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
 endfunction
+
+fu! GenerateUUID()
+
+python << EOF
+import uuid
+import vim
+
+# output a uuid to the vim variable for insertion below
+uu = "_" + str(uuid.uuid4()).replace('-','_')
+vim.command('let generatedUUID = "#ifndef %s\n#define %s\n\n"' % (uu,uu))
+ 
+EOF
+
+" insert the python generated uuid into the current cursor's position
+:execute "normal G"
+:execute "normal o\n#endif"
+:execute "normal gg"
+:execute "normal i" . generatedUUID . ""
+:execute "normal 3gg"
+endfunction
+
+noremap <Leader>uu :call GenerateUUID()<CR>
