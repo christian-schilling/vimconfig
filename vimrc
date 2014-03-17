@@ -94,7 +94,7 @@ set rnu
 
 set tw=80
 set colorcolumn=80
-set nowrap
+set wrap
 set list
 set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
 set formatoptions+=t
