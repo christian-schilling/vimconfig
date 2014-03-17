@@ -229,6 +229,9 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+map <A-h> <ESC>:tabprev<CR>
+map <A-l> <ESC>:tabnext<CR>
+
 set omnifunc=syntaxcomplete#Complete
 
 vnoremap <S-K> :s/[\[\(,]/&\r/g<CR>:s/[\]\)]/\r&/g<CR>:noh<CR>
