@@ -3,6 +3,7 @@ python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
 python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
 
 set pastetoggle=<F2>
+let g:hardtime_default_on = 0
 
 map  <Nul> <Esc>
 vmap <Nul> <Esc>
@@ -11,10 +12,10 @@ nmap <Nul> <Esc>
 imap <Nul> <Esc>
 smap <Nul> <Esc>
 
-inoremap <c-Space> <Esc>
-vnoremap <c-Space> <Esc>
-noremap <c-Space> <Esc>
-snoremap <c-Space> <Esc>
+" inoremap <c-Space> <Esc>
+" vnoremap <c-Space> <Esc>
+" noremap <c-Space> <Esc>
+" snoremap <c-Space> <Esc>
 
 vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
