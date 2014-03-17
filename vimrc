@@ -256,6 +256,7 @@ autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
 au BufRead,BufNewFile SConstruct        setfiletype python
+au BufRead,BufNewFile *.rl        setfiletype ragel
 
 " fix alt in dumb terminals
 let c='a'
