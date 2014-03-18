@@ -5,6 +5,8 @@ if !has("win32")
     python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
 endif
 
+set background=light
+
 set pastetoggle=<F2>
 
 map  <Nul> <Esc>
@@ -180,10 +182,11 @@ endfunction
 hi MatchParen cterm=bold ctermbg=none ctermfg=none
 hi MatchParen gui=bold guibg=NONE guifg=NONE
 
-color jellybeans
+"color jellybeans
+color summerfruit
 syntax on       " highlight syntax
-highlight Cursor guifg=black guibg=white
-highlight MatchParen guibg=black guifg=white
+"highlight Cursor guifg=black guibg=white
+"highlight MatchParen guibg=black guifg=white
 set hlsearch    " highlight searches
 
 
