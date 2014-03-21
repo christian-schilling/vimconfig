@@ -183,7 +183,8 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=none
 hi MatchParen gui=bold guibg=NONE guifg=NONE
 
 "color jellybeans
-color summerfruit
+set background=light
+color solarized
 syntax on       " highlight syntax
 "highlight Cursor guifg=black guibg=white
 "highlight MatchParen guibg=black guifg=white
