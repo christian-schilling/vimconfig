@@ -219,6 +219,7 @@ set backupdir=~/.backups
 
 " no tool bar please
 set guioptions='acigt'
+set mouse=
 set showtabline=1
 "set guifont=Inconsolata\ 12
 if has("gui_running")
