@@ -184,7 +184,8 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=none
 hi MatchParen gui=bold guibg=NONE guifg=NONE
 
 "color jellybeans
-color summerfruit
+set background=light
+color solarized
 syntax on       " highlight syntax
 "highlight Cursor guifg=black guibg=white
 "highlight MatchParen guibg=black guifg=white
@@ -219,6 +220,7 @@ set backupdir=~/.backups
 
 " no tool bar please
 set guioptions='acigt'
+set mouse=
 set showtabline=1
 "set guifont=Inconsolata\ 12
 if has("gui_running")
@@ -279,6 +281,7 @@ nmap <silent><leader><C-t> :TagbarClose<CR>
 " map toggle NERDTree window
 nmap <silent> <leader><C-f> :NERDTreeToggle<CR>
 nmap <silent> <leader>/ :noh<CR>
+let NERDTreeQuitOnOpen = 1
 let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 2
 let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
