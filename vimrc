@@ -114,9 +114,12 @@ if has("gui_win32")
     set listchars=tab:>-,trail:-,nbsp:-,extends:-
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 else
-    set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+    " set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+    set listchars=tab:⋅\ ,trail:⋅,nbsp:⋅,extends:→
+    " set listchars=tab:\ \ ,trail:⋅,nbsp:⋅,extends:→
 endif
 set formatoptions+=t
+
 
 let &guicursor = &guicursor . ",a:blinkon0"
 set cursorline
