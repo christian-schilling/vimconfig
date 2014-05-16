@@ -287,7 +287,7 @@ nmap <silent> <leader>/ :noh<CR>
 let NERDTreeQuitOnOpen = 1
 let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 2
-let NERDTreeIgnore=['\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
+let NERDTreeIgnore=['\.gcno$','\.gcda$','\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
 
 set wildignore+=*.o,*.obj
 
