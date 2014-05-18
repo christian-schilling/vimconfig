@@ -8,6 +8,7 @@ endif
 set background=light
 
 set pastetoggle=<F2>
+let g:hardtime_default_on = 0
 
 map  <Nul> <Esc>
 vmap <Nul> <Esc>
@@ -16,10 +17,10 @@ nmap <Nul> <Esc>
 imap <Nul> <Esc>
 smap <Nul> <Esc>
 
-inoremap <c-Space> <Esc>
-vnoremap <c-Space> <Esc>
-noremap <c-Space> <Esc>
-snoremap <c-Space> <Esc>
+" inoremap <c-Space> <Esc>
+" vnoremap <c-Space> <Esc>
+" noremap <c-Space> <Esc>
+" snoremap <c-Space> <Esc>
 
 let g:hardtime_default_on = 0
 let g:list_of_normal_keys = [ "h", "j", "k", "l", "-", "+"]
@@ -113,9 +114,12 @@ if has("gui_win32")
     set listchars=tab:>-,trail:-,nbsp:-,extends:-
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 else
-    set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+    " set listchars=tab:▷⋅,trail:⋅,nbsp:⋅,extends:→
+    set listchars=tab:⋅\ ,trail:⋅,nbsp:⋅,extends:→
+    " set listchars=tab:\ \ ,trail:⋅,nbsp:⋅,extends:→
 endif
 set formatoptions+=t
+
 
 let &guicursor = &guicursor . ",a:blinkon0"
 set cursorline
@@ -264,6 +268,9 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+map <A-h> <ESC>:tabprev<CR>
+map <A-l> <ESC>:tabnext<CR>
+
 set omnifunc=syntaxcomplete#Complete
 
 vnoremap <S-K> :s/[\[\(,]/&\r/g<CR>:s/[\]\)]/\r&/g<CR>:noh<CR>
@@ -294,6 +301,7 @@ autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
 au BufRead,BufNewFile SConstruct        setfiletype python
+au BufRead,BufNewFile *.rl        setfiletype ragel
 
 " fix alt in dumb terminals
 let c='a'
