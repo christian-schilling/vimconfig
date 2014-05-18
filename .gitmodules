@@ -43,3 +43,6 @@
 [submodule "bundle/vim-hardtime"]
 	path = bundle/vim-hardtime
 	url = git@github.com:takac/vim-hardtime.git
+[submodule "bundle/vim-visincr"]
+	path = bundle/vim-visincr
+	url = git@github.com:vim-scripts/VisIncr.git
