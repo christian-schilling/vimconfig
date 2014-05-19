@@ -10,6 +10,8 @@ set background=light
 set pastetoggle=<F2>
 let g:hardtime_default_on = 0
 
+let g:airline_powerline_fonts = 1
+
 map  <Nul> <Esc>
 vmap <Nul> <Esc>
 cmap <Nul> <Esc>
@@ -50,8 +52,8 @@ let g:clang_library_path = $HOME.'/.vim'
 
 "set updatetime=1000
 
-let g:signify_mapping_next_hunk = '<M-]>'
-let g:signify_mapping_prev_hunk = '<M-[>'
+" let g:signify_mapping_next_hunk = '<M-]>'
+" let g:signify_mapping_prev_hunk = '<M-[>'
 call pathogen#infect()
 set nocompatible               " vim comfort instead of vi compatibility
 set backspace=indent,eol,start " allow backspacing
@@ -129,59 +131,59 @@ set diffopt=filler,context:1000000
 " autoclean fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
-set statusline=%{fugitive#statusline()}
-set statusline+=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
+" set statusline=%{fugitive#statusline()}
+" set statusline+=%F%m%r%h%w(%{&ff},%Y,%{&fenc})\ [\%03.3b,0x\%02.2B]@%o
 set laststatus=2
 
 "display a warning if &et is wrong, or we have mixed-indenting
-set statusline+=%#error#
-set statusline+=%{StatuslineTabWarning()}
-set statusline+=%{StatuslineTrailingSpaceWarning()}
-set statusline+=%*
-set statusline+=%=\ line:%l,%v\ (%p%%)
+" set statusline+=%#error#
+" set statusline+=%{StatuslineTabWarning()}
+" set statusline+=%{StatuslineTrailingSpaceWarning()}
+" set statusline+=%*
+" set statusline+=%=\ line:%l,%v\ (%p%%)
 
 "recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+" autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
 
 "return '[tabs]' if tabs are used to indent
 "return '[mixed-indenting]' if spaces and tabs are used to indent
 "return an empty string if everything is fine
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let tabs = search('^\t', 'nw') != 0
-        let spaces = search('^ ', 'nw') != 0
+" function! StatuslineTabWarning()
+"     if !exists("b:statusline_tab_warning")
+"         let tabs = search('^\t', 'nw') != 0
+"         let spaces = search('^ ', 'nw') != 0
 
-        if tabs && spaces
-            set noet
-            let b:statusline_tab_warning =  '[mixed-indenting]'
-        elseif (spaces)
-            set et
-            let b:statusline_tab_warning = ''
-        elseif (tabs)
-            set noet
-            let b:statusline_tab_warning = '[tabs]'
-        else
-            let b:statusline_tab_warning = ''
-        endif
-    endif
-    return b:statusline_tab_warning
-endfunction
+"         if tabs && spaces
+"             set noet
+"             let b:statusline_tab_warning =  '[mixed-indenting]'
+"         elseif (spaces)
+"             set et
+"             let b:statusline_tab_warning = ''
+"         elseif (tabs)
+"             set noet
+"             let b:statusline_tab_warning = '[tabs]'
+"         else
+"             let b:statusline_tab_warning = ''
+"         endif
+"     endif
+"     return b:statusline_tab_warning
+" endfunction
 
 "recalculate the trailing whitespace warning when idle, and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+" autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 
 "return '[\s]' if trailing white space is detected
 "return '' otherwise
-function! StatuslineTrailingSpaceWarning()
-    if !exists("b:statusline_trailing_space_warning")
-        if search('\s\+$', 'nw') != 0
-            let b:statusline_trailing_space_warning = '[\s]'
-        else
-            let b:statusline_trailing_space_warning = ''
-        endif
-    endif
-    return b:statusline_trailing_space_warning
-endfunction
+" function! StatuslineTrailingSpaceWarning()
+"     if !exists("b:statusline_trailing_space_warning")
+"         if search('\s\+$', 'nw') != 0
+"             let b:statusline_trailing_space_warning = '[\s]'
+"         else
+"             let b:statusline_trailing_space_warning = ''
+"         endif
+"     endif
+"     return b:statusline_trailing_space_warning
+" endfunction
 
 hi MatchParen cterm=bold ctermbg=none ctermfg=none
 hi MatchParen gui=bold guibg=NONE guifg=NONE
