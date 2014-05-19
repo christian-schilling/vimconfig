@@ -189,8 +189,12 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=none
 hi MatchParen gui=bold guibg=NONE guifg=NONE
 
 "color jellybeans
-set background=light
-color solarized
+if has("gui_running")
+    set background=light
+    color solarized
+else
+    color hybrid
+endif
 syntax on       " highlight syntax
 "highlight Cursor guifg=black guibg=white
 "highlight MatchParen guibg=black guifg=white
