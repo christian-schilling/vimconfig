@@ -52,8 +52,8 @@ let g:clang_library_path = $HOME.'/.vim'
 
 "set updatetime=1000
 
-" let g:signify_mapping_next_hunk = '<M-]>'
-" let g:signify_mapping_prev_hunk = '<M-[>'
+let g:signify_mapping_next_hunk = '<M-]>'
+let g:signify_mapping_prev_hunk = '<M-[>'
 call pathogen#infect()
 set nocompatible               " vim comfort instead of vi compatibility
 set backspace=indent,eol,start " allow backspacing
@@ -63,6 +63,19 @@ set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
 set novisualbell
 set noswapfile
+
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+    \gvy/<C-R><C-R>=substitute(
+    \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+    \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+    \gvy?<C-R><C-R>=substitute(
+    \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+    \gV:call setreg('"', old_reg, old_regtype)<CR>
+
 
 set completeopt-=preview
 set scrolloff=3
@@ -88,9 +101,12 @@ nmap <leader>go :cclose<CR>:Gedit<CR>
 nmap <M-/> :Ggrep 
 
 nmap <M-p> :diffput<CR>:diffupdate<CR>
-nmap <M-o> :diffget<CR>:diffupdate<CR>
+nmap <M-g> :diffget<CR>:diffupdate<CR>
 vmap <M-p> :diffput<CR>:diffupdate<CR>
-vmap <M-o> :diffget<CR>:diffupdate<CR>
+vmap <M-g> :diffget<CR>:diffupdate<CR>
+
+nmap <M-o> g;
+nmap <M-i> g,
 
 set hidden
 
@@ -304,6 +320,7 @@ au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
 au BufRead,BufNewFile SConstruct        setfiletype python
 au BufRead,BufNewFile *.rl        setfiletype ragel
+au BufRead,BufNewFile *.md        set filetype=markdown
 
 " fix alt in dumb terminals
 let c='a'
@@ -346,3 +363,5 @@ EOF
 endfunction
 
 noremap <Leader>uu :call GenerateUUID()<CR>
+
+set switchbuf=useopen
