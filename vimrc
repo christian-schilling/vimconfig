@@ -89,7 +89,7 @@ let mapleader = " "
 nmap <leader>v :edit $MYVIMRC<CR>
 nmap <leader>m :wa<CR>:make<CR>:cw<CR>
 
-nmap <leader>gj :wa<CR>:silent cfile `~/.vim/bin/git-jump diff`<CR>
+nmap <leader>gj :wa<CR>:silent cexpr system('~/.vim/bin/git-jump')<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gw :Gwrite<CR>
 nmap <leader>gc :Gcommit<CR>

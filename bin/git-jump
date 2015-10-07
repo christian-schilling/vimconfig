@@ -1,70 +1,33 @@
-#!/bin/sh
+#!/bin/python
 
-usage() {
-	cat <<\EOF
-usage: git jump <mode> [<args>]
+import commands
 
-Jump to interesting elements in an editor.
-The <mode> parameter is one of:
+root = commands.getoutput("git rev-parse --show-toplevel")
 
-diff: elements are diff hunks. Arguments are given to diff.
+diff = commands.getoutput("git diff -U0").split("\n")
 
-merge: elements are merge conflicts. Arguments are ignored.
+for line in diff:
+    if line.startswith("+++"):
+        filename = root+line[5:]
+    if line.startswith("@@"):
+        rem,add = line.split("@@")[1].strip().split(" ")
+        rem = rem[1:]
+        if "," not in rem:
+            rem = 1
+        else:
+            rem = rem.split(",")[1]
 
-grep: elements are grep hits. Arguments are given to grep.
-EOF
-}
+        add = add[1:]
+        if "," not in add:
+            add = 1
+        else:
+            add = add.split(",")[1]
 
-open_editor() {
-	editor=`git var GIT_EDITOR`
-	eval "$editor -q \$1"
-}
+        linenumber = line.split("+")[1].split(" ")[0].split(",")[0]
+        outline = "{}:{}: {} deleted {} added".format(
+            filename,linenumber,rem,add
+        )
+        print outline
+    if line.startswith("-") and not line.startswith("---"):
+        print line[1:]
 
-mode_diff() {
-	git diff --relative "$@" |
-	perl -ne '
-	if (m{^\+\+\+ b/(.*)}) { $file = $1; next }
-	defined($file) or next;
-	if (m/^@@ .*\+(\d+)/) { $line = $1; next }
-	defined($line) or next;
-	if (/^ /) { $line++; next }
-	if (/^[-+]\s*(.*)/) {
-		print "$file:$line: $1\n";
-		$line = undef;
-	}
-	'
-}
-
-mode_merge() {
-	git ls-files -u |
-	perl -pe 's/^.*?\t//' |
-	sort -u |
-	while IFS= read fn; do
-		grep -Hn '^<<<<<<<' "$fn"
-	done
-}
-
-# Grep -n generates nice quickfix-looking lines by itself,
-# but let's clean up extra whitespace, so they look better if the
-# editor shows them to us in the status bar.
-mode_grep() {
-	git grep -n "$@" |
-	perl -pe '
-	s/[ \t]+/ /g;
-	s/^ *//;
-	'
-}
-
-if test $# -lt 1; then
-	usage >&2
-	exit 1
-fi
-mode=$1; shift
-
-#trap 'rm -f "$tmp"' 0 1 2 3 15
-tmp=`mktemp -t git-jump.XXXXXX` || exit 1
-echo $tmp
-type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
-"mode_$mode" "$@" >"$tmp"
-#test -s "$tmp" || exit 0
-#open_editor "$tmp"
