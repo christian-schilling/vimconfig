@@ -1,32 +1,46 @@
 #!/bin/python
 
 import commands
+import sys
+args = " ".join(sys.argv[1:])
 
 root = commands.getoutput("git rev-parse --show-toplevel")
 
-diff = commands.getoutput("git diff -U0").split("\n")
+diff = commands.getoutput("git diff -U0 {}".format(args)).split("\n")
 
 for line in diff:
     if line.startswith("+++"):
         filename = root+line[5:]
+    if line.startswith("---"):
+        if line[4] == "a":
+            oldfilename = root+line[5:]
+        else:
+            oldfilename = line[4:]
+
     if line.startswith("@@"):
         rem,add = line.split("@@")[1].strip().split(" ")
         rem = rem[1:]
         if "," not in rem:
             rem = 1
         else:
-            rem = rem.split(",")[1]
+            rem = int(rem.split(",")[1])
+
 
         add = add[1:]
         if "," not in add:
             add = 1
         else:
-            add = add.split(",")[1]
+            add = int(add.split(",")[1])
 
         linenumber = line.split("+")[1].split(" ")[0].split(",")[0]
-        outline = "{}:{}: {} deleted {} added".format(
-            filename,linenumber,rem,add
+        outline = "{}:{}:".format(
+            filename,linenumber
         )
+        if rem != 0: outline += " {} deleted".format(rem)
+        if add != 0: outline += " {} added".format(add)
+        if args: outline += " [{}]".format(args)
+        if filename != oldfilename: outline += " (was: {})".format(oldfilename)
+
         print outline
     if line.startswith("-") and not line.startswith("---"):
         print line[1:]
