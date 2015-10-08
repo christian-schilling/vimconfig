@@ -209,8 +209,8 @@ hi MatchParen gui=bold guibg=NONE guifg=NONE
 
 "color jellybeans
 if has("gui_running")
-    set background=light
-    color solarized
+    set background=dark
+    color hybrid
 else
     color hybrid
 endif
