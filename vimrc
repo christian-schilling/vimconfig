@@ -352,14 +352,14 @@ import uuid
 import vim
 
 # output a uuid to the vim variable for insertion below
-uu = "_" + str(uuid.uuid4()).replace('-','_')
+uu = "include_guard_" + str(uuid.uuid4()).replace('-','_')
 vim.command('let generatedUUID = "#ifndef %s\n#define %s\n\n"' % (uu,uu))
  
 EOF
 
 " insert the python generated uuid into the current cursor's position
 :execute "normal G"
-:execute "normal o\n#endif"
+:execute "normal o\n#endif /* include_guard */"
 :execute "normal gg"
 :execute "normal i" . generatedUUID . ""
 :execute "normal 3gg"
