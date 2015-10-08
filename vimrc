@@ -118,7 +118,8 @@ set et      " expand tabs to spaces
 set smarttab
 set autoindent
 set smartindent
-set rnu
+set relativenumber
+set number
 
 " augroup vimrc_autocmds
 "   autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp highlight OverLength ctermbg=darkgrey guibg=#ff0000
