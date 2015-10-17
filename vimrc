@@ -41,10 +41,12 @@ let g:tagbar_compact = 1
 let g:tagbar_width = 30
 let g:tagbar_iconchars = ['▸', '▾']
 let g:ctrlp_map = '<leader>f'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_by_filename = 1
 
-if !has("win32")
-    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
-endif
+" if !has("win32")
+"     let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+" endif
 
 let g:clang_complete_copen=1
 let g:clang_complete_auto = 0
