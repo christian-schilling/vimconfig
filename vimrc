@@ -126,8 +126,8 @@ set number
 "   autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp match OverLength /\%80v.*/
 " augroup END
 
-set tw=80
-set colorcolumn=80
+set tw=100
+set colorcolumn=100
 set wrap
 set list
 
