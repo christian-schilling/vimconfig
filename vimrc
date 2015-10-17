@@ -273,10 +273,15 @@ nnoremap <F8> za
 onoremap <F8> <C-C>za
 vnoremap <F8> zf
 
-nnoremap <left> :vertical resize -10<cr>
-nnoremap <down> :resize +10<cr>
-nnoremap <up> :resize -10<cr>
-nnoremap <right> :vertical resize +10<cr>
+nnoremap <left> <nop>
+nnoremap <down> <nop>
+nnoremap <up> <nop>
+nnoremap <right> <nop>
+
+nnoremap <A-left> :vertical resize -10<cr>
+nnoremap <A-down> :resize +10<cr>
+nnoremap <A-up> :resize -10<cr>
+nnoremap <A-right> :vertical resize +10<cr>
 
 nnoremap <C-left> :vertical resize -1<cr>
 nnoremap <C-down> :resize +1<cr>
@@ -368,3 +373,12 @@ endfunction
 noremap <Leader>uu :call GenerateUUID()<CR>
 
 set switchbuf=useopen
+
+if ! has('gui_running')
+    set ttimeoutlen=10
+    augroup FastEscape
+        autocmd!
+        au InsertEnter * set timeoutlen=0
+        au InsertLeave * set timeoutlen=1000
+    augroup END
+endif
