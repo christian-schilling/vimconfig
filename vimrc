@@ -1,9 +1,9 @@
 
-if !has("win32")
-    python import ctypes,os
-    python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
-    python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
-endif
+"if !has("win32")
+"    python import ctypes,os
+"    python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libffi.so.6')
+"    python ctypes.cdll.LoadLibrary(os.getenv('HOME')+'/.vim/libLLVM-3.3.so')
+"endif
 
 set background=light
 
@@ -11,6 +11,10 @@ set pastetoggle=<F2>
 let g:hardtime_default_on = 0
 
 let g:airline_powerline_fonts = 1
+" let g:rustfmt_autosave = 1
+"
+
+let $RUST_SRC_PATH="/home/christian/code/rust/src/"
 
 map  <Nul> <Esc>
 vmap <Nul> <Esc>
@@ -32,9 +36,9 @@ vmap <c-s> <Esc>:wa<CR>
 imap <c-s> <Esc>:wa<CR>
 nmap <c-s> :wa<CR>
 
-vmap <M-m> <Esc>:wa<CR>:make<CR>
-imap <M-m> <Esc>:wa<CR>:make<CR>
-nmap <M-m> <Esc>:wa<CR>:make<CR>
+vmap <M-m> <Esc>:wa<CR>:make<CR>:cw<CR>
+imap <M-m> <Esc>:wa<CR>:make<CR>:cw<CR>
+nmap <M-m> <Esc>:wa<CR>:make<CR>:cw<CR>
 
 inoremap <C-l> <C-x><C-o>
 let g:tagbar_compact = 1
@@ -50,7 +54,7 @@ let g:ctrlp_by_filename = 1
 
 let g:clang_complete_copen=1
 let g:clang_complete_auto = 0
-let g:clang_library_path = $HOME.'/.vim'
+"let g:clang_library_path = $HOME.'/.vim'
 
 "set updatetime=1000
 
@@ -100,6 +104,8 @@ nmap <leader>gr :Gread<CR>
 nmap <leader>gs :Gstatus<CR>
 nmap <leader>gl :silent Glog<CR>:cw<CR>
 nmap <leader>go :cclose<CR>:Gedit<CR>
+
+nmap <leader>si vip:sort u<CR>
 
 nmap <M-/> :Ggrep 
 
@@ -220,6 +226,12 @@ syntax on       " highlight syntax
 "highlight MatchParen guibg=black guifg=white
 set hlsearch    " highlight searches
 
+nmap <silent> <leader>cb :color hybrid<CR>:set background=dark<CR>
+nmap <silent> <leader>cw :color solarized<CR>:set background=light<CR>
+
+let g:racer_cmd = "racer"
+let $RUST_SRC_PATH="/home/christian/code/rust/src/"
+" let g:rustfmt_autosave = 1
 
 
 " When editing a file, always jump to the last known cursor position.
@@ -249,11 +261,13 @@ set backupdir=~/.backups
 
 " no tool bar please
 set guioptions='acigt'
-set mouse=
+" set mouse=
 set showtabline=1
 "set guifont=Inconsolata\ 12
 if has("gui_running")
     if has("gui_gtk2")
+        set guifont=Inconsolata-dz\ for\ Powerline\ 11
+    elseif has("gui_gtk3")
         set guifont=Inconsolata-dz\ for\ Powerline\ 11
     elseif has("gui_macvim")
         set guifont=Menlo\ Regular:h14
@@ -269,15 +283,16 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Compact_Format = 1
 let Tlist_File_Fold_Auto_Close = 1
 
+
 inoremap <F8> <C-O>za
 nnoremap <F8> za
 onoremap <F8> <C-C>za
 vnoremap <F8> zf
 
-nnoremap <left> <nop>
-nnoremap <down> <nop>
-nnoremap <up> <nop>
-nnoremap <right> <nop>
+" nnoremap <left> <nop>
+" nnoremap <down> <nop>
+" nnoremap <up> <nop>
+" nnoremap <right> <nop>
 
 nnoremap <A-left> :vertical resize -10<cr>
 nnoremap <A-down> :resize +10<cr>
@@ -294,6 +309,9 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+inoremap <C-j> <down>
+inoremap <C-k> <up>
 
 map <A-h> <ESC>:tabprev<CR>
 map <A-l> <ESC>:tabnext<CR>
@@ -318,9 +336,9 @@ nmap <silent> <leader>/ :noh<CR>
 let NERDTreeQuitOnOpen = 1
 let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 2
-let NERDTreeIgnore=['\.gcno$','\.gcda$','\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
+let NERDTreeIgnore=['^build_','\.gcno$','\.gcda$','\.beam$','\.pyc$','\.jpg$','\.gif$','\.png$','\.zip$', '\~$', '\.pdf$','\.aus$','\.lo$','\.o$']
 
-set wildignore+=*.o,*.obj
+set wildignore+=*.o,*.obj,*.exe,*.d,*.a,*.cmdline
 
 
 autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
@@ -328,8 +346,11 @@ autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
 au BufRead,BufNewFile SConstruct        setfiletype python
+au BufRead,BufNewFile Project.meta        setfiletype bake
+au BufRead,BufNewFile Collections.meta        setfiletype bake
 au BufRead,BufNewFile *.rl        setfiletype ragel
 au BufRead,BufNewFile *.md        set filetype=markdown
+au BufRead,BufNewFile *.rs set sw=4
 
 " fix alt in dumb terminals
 let c='a'
@@ -367,7 +388,7 @@ EOF
 :execute "normal G"
 :execute "normal o\n#endif /* include_guard */"
 :execute "normal gg"
-:execute "normal i" . generatedUUID . ""
+:execute "normal O" . generatedUUID . ""
 :execute "normal 3gg"
 endfunction
 
@@ -383,3 +404,30 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
+
+autocmd FileType sml setlocal commentstring=(\*\ %s\ \*)
+autocmd FileType bake setlocal commentstring=#\ %s
+
+"" file is large from 10mb
+"let g:LargeFile = 1024 * 500
+"augroup LargeFile 
+" autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
+"augroup END
+"
+"function LargeFile()
+" " no syntax highlighting etc
+" set eventignore+=FileType
+" " save memory when other file is viewed
+" " setlocal bufhidden=unload
+" " is read-only (write with :w new_filename)
+" setlocal buftype=nowrite
+" " no undo possible
+" setlocal undolevels=-1
+" " display message
+" autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024) . " KB, so some options are changed (see .vimrc for details)."
+"endfunction
+"
+" :set efm+=%f,\ line\ %l:%m
+:set efm+=MSG:\ %f(%l\\,%c):\ %m
+:set efm+=----\ %f(%l\\,%c):\ %m
+:set efm+=\ \ File\ \"%f\"\\,\ line\ %l\\,%m

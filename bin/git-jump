@@ -6,7 +6,7 @@ args = " ".join(sys.argv[1:])
 
 root = commands.getoutput("git rev-parse --show-toplevel")
 
-diff = commands.getoutput("git diff -U0 {}".format(args)).split("\n")
+diff = commands.getoutput("git diff -w -U0 {}".format(args)).split("\n")
 
 for line in diff:
     if line.startswith("+++"):
