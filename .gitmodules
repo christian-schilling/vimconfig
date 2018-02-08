@@ -4,9 +4,6 @@
 [submodule "bundle/vim-fugitive"]
 	path = bundle/vim-fugitive
 	url = git://github.com/tpope/vim-fugitive.git
-[submodule "bundle/gitv"]
-	path = bundle/gitv
-	url = git://github.com/gregsexton/gitv.git
 [submodule "bundle/googletest-syntax"]
 	path = bundle/googletest-syntax
 	url = git://github.com/ciaranm/googletest-syntax
@@ -25,9 +22,6 @@
 [submodule "bundle/vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
-[submodule "bundle/powerline"]
-	path = bundle/powerline
-	url = git://github.com/Lokaltog/powerline
 [submodule "bundle/tagbar"]
 	path = bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
@@ -37,12 +31,6 @@
 [submodule "bundle/vim-commentary"]
 	path = bundle/vim-commentary
 	url = git://github.com/tpope/vim-commentary.git
-[submodule "bundle/clang_complete"]
-	path = bundle/clang_complete
-	url = git://github.com/Rip-Rip/clang_complete.git
-[submodule "bundle/vim-hardtime"]
-	path = bundle/vim-hardtime
-	url = git@github.com:takac/vim-hardtime.git
 [submodule "bundle/vim-visincr"]
 	path = bundle/vim-visincr
 	url = git@github.com:vim-scripts/VisIncr.git
@@ -58,6 +46,3 @@
 [submodule "bundle/vim-abolish"]
 	path = bundle/vim-abolish
 	url = git://github.com/tpope/vim-abolish.git
-[submodule "bundle/vim-racer"]
-	path = bundle/vim-racer
-	url = https://github.com/racer-rust/vim-racer
