@@ -52,9 +52,10 @@ let g:ctrlp_by_filename = 1
 "     let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 " endif
 
-let g:clang_complete_copen=1
-let g:clang_complete_auto = 0
+" let g:clang_complete_copen=1
+" let g:clang_complete_auto = 0
 "let g:clang_library_path = $HOME.'/.vim'
+" let g:clang_library_path="/Library/Developer/CommandLineTools/usr/lib/"
 
 "set updatetime=1000
 
@@ -92,8 +93,9 @@ set scrolloff=3
 " autocmd! bufwritepost .vimrc source $MYVIMRC
 
 let mapleader = " "
-nmap <leader>v :edit $MYVIMRC<CR>
-nmap <leader>m :wa<CR>:make<CR>:cw<CR>
+nmap <leader>v :tabnew $MYVIMRC<CR>
+nmap <leader>l :tabnew ~/Dropbox/TODO<CR>
+nmap <leader>m :wa<CR>:make 
 
 nmap <leader>gj :wa<CR>:silent cexpr system('~/.vim/bin/git-jump')<CR>:cw<CR>
 nmap <leader>gJ :wa<CR>:silent cexpr system('~/.vim/bin/git-jump --cached')<CR>:cw<CR>
@@ -105,9 +107,13 @@ nmap <leader>gs :Gstatus<CR>
 nmap <leader>gl :silent Glog<CR>:cw<CR>
 nmap <leader>go :cclose<CR>:Gedit<CR>
 
-nmap <leader>si vip:sort u<CR>
+nmap <silent> <leader>bs :execute "!echo 'breakpoint set --file %:t --line " . line(".") . "' >~/.lldbinit"<CR>
 
-nmap <M-/> :Ggrep 
+nmap <leader>si vip:sort u<CR>
+nmap <leader>df :%!clang-format<CR>
+nmap <leader>o :execute "drop ". system("~/bin/findhimpl " .expand("%:p"))<CR>
+
+nmap <D-/> :Ggrep 
 
 nmap <M-p> :diffput<CR>:diffupdate<CR>
 nmap <M-g> :diffget<CR>:diffupdate<CR>
@@ -131,7 +137,12 @@ set number
 " augroup vimrc_autocmds
 "   autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp highlight OverLength ctermbg=darkgrey guibg=#ff0000
 "   autocmd BufEnter *.py,*.c,*.cpp,*.h,*.hpp match OverLength /\%80v.*/
-" augroup END
+
+autocmd BufEnter *.h,*.cpp,*.c :match SpellBad / if(/
+autocmd BufEnter *.h,*.cpp,*.c :match SpellBad / for(/
+autocmd BufEnter *.h,*.cpp,*.c :match SpellBad / switch(/
+autocmd BufEnter *.h,*.cpp,*.c :match SpellBad / while(/
+" augroup END 
 
 set tw=100
 set colorcolumn=100
@@ -146,7 +157,7 @@ else
     set listchars=tab:⋅\ ,trail:⋅,nbsp:⋅,extends:→
     " set listchars=tab:\ \ ,trail:⋅,nbsp:⋅,extends:→
 endif
-set formatoptions+=t
+set formatoptions-=t
 
 
 let &guicursor = &guicursor . ",a:blinkon0"
@@ -227,7 +238,7 @@ syntax on       " highlight syntax
 set hlsearch    " highlight searches
 
 nmap <silent> <leader>cb :color hybrid<CR>:set background=dark<CR>
-nmap <silent> <leader>cw :color solarized<CR>:set background=light<CR>
+nmap <silent> <leader>cw :color summerfruit<CR>:set background=light<CR>
 
 let g:racer_cmd = "racer"
 let $RUST_SRC_PATH="/home/christian/code/rust/src/"
@@ -270,7 +281,8 @@ if has("gui_running")
     elseif has("gui_gtk3")
         set guifont=Inconsolata-dz\ for\ Powerline\ 11
     elseif has("gui_macvim")
-        set guifont=Menlo\ Regular:h14
+        "set guifont=Menlo\ Regular:h14
+        set guifont=Inconsolata\ for\ Powerline:h16
     elseif has("gui_win32")
         set guifont=Consolas:h11:cANSI
     endif
@@ -310,20 +322,32 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+nmap <silent> <leader><C-v> :vsplit<CR>:vertical resize 104<CR>
+nmap <silent> <leader><C-a> :vertical resize 104<CR>
+
 inoremap <C-j> <down>
 inoremap <C-k> <up>
 
-map <A-h> <ESC>:tabprev<CR>
-map <A-l> <ESC>:tabnext<CR>
+nnoremap H gT
+nnoremap L gt
 
 set omnifunc=syntaxcomplete#Complete
 
 vnoremap <S-K> :s/[\[\(,]/&\r/g<CR>:s/[\]\)]/\r&/g<CR>:noh<CR>
-map <M-8> :silent execute 'silent Ggrep -w ' . expand("<cword>") <Bar> :cw<CR>
-map <M-t> :silent execute 'silent Ggrep -w TODO'<Bar> :cw<CR>
-map <M-j> :cn<CR>
-map <M-k> :cp<CR>
-map <M-#> :cclose<CR>
+
+if has("gui_macvim")
+    map <D-8> :silent execute 'silent Ggrep -w ' . expand("<cword>") <Bar> :cw<CR>
+    map <D-t> :silent execute 'silent Ggrep -w TODO'<Bar> :cw<CR>
+    map <D-j> :copen<CR>:cn<CR>
+    map <D-k> :copen<CR>:cp<CR>
+    map <D-#> :cclose<CR>
+else
+    map <M-8> :silent execute 'silent Ggrep -w ' . expand("<cword>") <Bar> :cw<CR>
+    map <M-t> :silent execute 'silent Ggrep -w TODO'<Bar> :cw<CR>
+    map <M-j> :copen<CR>:cn<CR>
+    map <M-k> :copen<CR>:cp<CR>
+    map <M-#> :cclose<CR>
+endif
 
 :command Thtml :%!tidy -config ~/.vim/tidyrc_html.txt -q -i --show-errors 0
 
@@ -331,7 +355,7 @@ nmap <silent><leader>t :TagbarOpen fj<CR>
 nmap <silent><leader><C-t> :TagbarClose<CR>
 " NERDTree configuration...
 " map toggle NERDTree window
-nmap <silent> <leader><C-f> :NERDTreeToggle<CR>
+nmap <silent> <leader><C-f> :NERDTreeFind<CR>
 nmap <silent> <leader>/ :noh<CR>
 let NERDTreeQuitOnOpen = 1
 let NERDTreeChDirMode = 2
@@ -341,16 +365,14 @@ let NERDTreeIgnore=['^build_','\.gcno$','\.gcda$','\.beam$','\.pyc$','\.jpg$','\
 set wildignore+=*.o,*.obj,*.exe,*.d,*.a,*.cmdline
 
 
-autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
-autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
-au BufRead,BufNewFile *.vala            setfiletype vala
-au BufRead,BufNewFile *.vapi            setfiletype vala
+autocmd BufNewFile,BufRead *.rs set filetype=rust
 au BufRead,BufNewFile SConstruct        setfiletype python
 au BufRead,BufNewFile Project.meta        setfiletype bake
 au BufRead,BufNewFile Collections.meta        setfiletype bake
 au BufRead,BufNewFile *.rl        setfiletype ragel
 au BufRead,BufNewFile *.md        set filetype=markdown
 au BufRead,BufNewFile *.rs set sw=4
+au BufNewFile,BufRead *.t set filetype=cram
 
 " fix alt in dumb terminals
 let c='a'
@@ -374,7 +396,7 @@ endfunction
 
 fu! GenerateUUID()
 
-python << EOF
+py3 << EOF
 import uuid
 import vim
 
@@ -428,6 +450,20 @@ autocmd FileType bake setlocal commentstring=#\ %s
 "endfunction
 "
 " :set efm+=%f,\ line\ %l:%m
-:set efm+=MSG:\ %f(%l\\,%c):\ %m
-:set efm+=----\ %f(%l\\,%c):\ %m
-:set efm+=\ \ File\ \"%f\"\\,\ line\ %l\\,%m
+" :set efm+=MSG:\ %f(%l\\,%c):\ %m
+" :set efm+=----\ %f(%l\\,%c):\ %m
+" :set efm+=\ \ File\ \"%f\"\\,\ line\ %l\\,%m
+
+set autoread
+
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set cursorline
+    autocmd WinLeave * set nocursorline
+    autocmd WinEnter * set colorcolumn=100
+    autocmd WinLeave * set colorcolumn=0
+    hi cursorline guibg=black
+augroup END
+
+" star command without jumping
+nnoremap <silent> * :let @/= '\<' . expand('<cword>') . '\>' <bar> set hls <cr>
