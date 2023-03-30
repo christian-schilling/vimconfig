@@ -281,8 +281,8 @@ if has("gui_running")
     elseif has("gui_gtk3")
         set guifont=Inconsolata-dz\ for\ Powerline\ 11
     elseif has("gui_macvim")
-        "set guifont=Menlo\ Regular:h14
-        set guifont=Inconsolata\ for\ Powerline:h16
+        set guifont=Menlo\ Regular:h14
+        "set guifont=Inconsolata\ for\ Powerline:h16
     elseif has("gui_win32")
         set guifont=Consolas:h11:cANSI
     endif

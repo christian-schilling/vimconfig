@@ -3,10 +3,10 @@
 	url = https://github.com/scrooloose/nerdtree.git
 [submodule "bundle/vim-fugitive"]
 	path = bundle/vim-fugitive
-	url = git://github.com/tpope/vim-fugitive.git
+	url = https://github.com/tpope/vim-fugitive.git
 [submodule "bundle/googletest-syntax"]
 	path = bundle/googletest-syntax
-	url = git://github.com/ciaranm/googletest-syntax
+	url = https://github.com/ciaranm/googletest-syntax
 [submodule "bundle/vim-indent-object"]
 	path = bundle/vim-indent-object
 	url = https://github.com/michaeljsmith/vim-indent-object.git
@@ -15,13 +15,13 @@
 	url = https://github.com/kien/ctrlp.vim.git
 [submodule "bundle/vim-makeshift"]
 	path = bundle/vim-makeshift
-	url = git://github.com/johnsyweb/vim-makeshift.git
+	url = https://github.com/johnsyweb/vim-makeshift.git
 [submodule "bundle/vim-surround"]
 	path = bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
 [submodule "bundle/vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
+	url = https://github.com/altercation/vim-colors-solarized.git
 [submodule "bundle/tagbar"]
 	path = bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
@@ -30,19 +30,19 @@
 	url = https://github.com/mhinz/vim-signify
 [submodule "bundle/vim-commentary"]
 	path = bundle/vim-commentary
-	url = git://github.com/tpope/vim-commentary.git
+	url = https://github.com/tpope/vim-commentary.git
 [submodule "bundle/vim-visincr"]
 	path = bundle/vim-visincr
 	url = git@github.com:vim-scripts/VisIncr.git
 [submodule "bundle/tabular"]
 	path = bundle/tabular
-	url = git://github.com/godlygeek/tabular.git
+	url = https://github.com/godlygeek/tabular.git
 [submodule "bundle/vim-repeat"]
 	path = bundle/vim-repeat
-	url = git://github.com/tpope/vim-repeat.git
+	url = https://github.com/tpope/vim-repeat.git
 [submodule "bundle/vim-airline"]
 	path = bundle/vim-airline
-	url = git://github.com/bling/vim-airline.git
+	url = https://github.com/bling/vim-airline.git
 [submodule "bundle/vim-abolish"]
 	path = bundle/vim-abolish
-	url = git://github.com/tpope/vim-abolish.git
+	url = https://github.com/tpope/vim-abolish.git
